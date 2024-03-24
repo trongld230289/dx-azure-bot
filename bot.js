@@ -17,7 +17,7 @@ class EchoBot extends ActivityHandler {
         // create a DentistScheduler connector
 
         // create a IntentRecognizer connector
-
+        this.dentistScheduler = new DentistScheduler("https://dx-azure-bot.azurewebsites.net/");
 
         this.onMessage(async (context, next) => {
             // send user input to QnA Maker and collect the response in a variable
@@ -37,9 +37,9 @@ class EchoBot extends ActivityHandler {
                 //LuisResult.result.prediction.intents.findParking.score > .6 &&
                 LuisResult.result.prediction.entities.length > 0
             ) {
-                const availability = LuisResult.result.prediction.entities[0].text;
+                const text = await this.dentistScheduler.getAvailability();
                 // call api with location entity info
-                await context.sendActivity(availability);
+                await context.sendActivity(text);
                 await next();
                 return;
             } else if (LuisResult.result.prediction.topIntent === "ScheduleAppointment" &&
@@ -48,8 +48,8 @@ class EchoBot extends ActivityHandler {
                 LuisResult.result.prediction.entities.length > 0
             ) {
                 const time = LuisResult.result.prediction.entities[0].text;
-                // call api with location entity info
-                await context.sendActivity(time);
+                const text = await this.dentistScheduler.scheduleAppointment(time)
+                await context.sendActivity(text);
                 await next();
                 return;
             }
@@ -62,7 +62,6 @@ class EchoBot extends ActivityHandler {
             //  return;
             // }
             // else {...}
-            console.log("aaaaaaaaa");
             if (qnaResults[0]) {
                 await context.sendActivity(`${qnaResults[0].answer}`);
             }

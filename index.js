@@ -36,10 +36,6 @@ const botFrameworkAuthentication = new ConfigurationBotFrameworkAuthentication({
     tenantId: '87a45d18-f2c7-4012-839e-c9cce6cd0aa4' // The tenant ID of the user-assigned managed identity.
 });
 
-const SchedulerConfiguration = {
-    SchedulerEndpoint: ''
-}
-
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about how bots work.
 const adapter = new CloudAdapter(botFrameworkAuthentication);
