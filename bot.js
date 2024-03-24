@@ -27,7 +27,32 @@ class EchoBot extends ActivityHandler {
             const qnaResults = await this.getAnswer(question);
             // send user input to IntentRecognizer and collect the response in a variable
             // don't forget 'await'
+            const LuisResult = await this.analyzeConversation("userId", question, "en");
 
+            // console.log(LuisResult);
+            // Determine which service to respond with //
+            console.log(LuisResult);
+            if (LuisResult.result.prediction.topIntent === "GetAvailability" &&
+                LuisResult.result.prediction.intents[0].confidenceScore > 0.6 &&
+                //LuisResult.result.prediction.intents.findParking.score > .6 &&
+                LuisResult.result.prediction.entities.length > 0
+            ) {
+                const availability = LuisResult.result.prediction.entities[0].text;
+                // call api with location entity info
+                await context.sendActivity(availability);
+                await next();
+                return;
+            } else if (LuisResult.result.prediction.topIntent === "ScheduleAppointment" &&
+                LuisResult.result.prediction.intents[0].confidenceScore > 0.6 &&
+                //LuisResult.result.prediction.intents.findParking.score > .6 &&
+                LuisResult.result.prediction.entities.length > 0
+            ) {
+                const time = LuisResult.result.prediction.entities[0].text;
+                // call api with location entity info
+                await context.sendActivity(time);
+                await next();
+                return;
+            }
             // determine which service to respond with based on the results from LUIS //
 
             // if(top intent is intentA and confidence greater than 50){
@@ -37,15 +62,13 @@ class EchoBot extends ActivityHandler {
             //  return;
             // }
             // else {...}
-
+            console.log("aaaaaaaaa");
             if (qnaResults[0]) {
                 await context.sendActivity(`${qnaResults[0].answer}`);
             }
             else {
                 // If no answers were returned from QnA Maker, reply with help.
-                await context.sendActivity(`I'm not sure I can answer your question`
-                    + 'I can find charging stations or electric vehicle parking'
-                    + `Or you can ask me questions about electric vehicles`);
+                await context.sendActivity(`No answers were found.`);
             }
 
             await next();
@@ -53,14 +76,13 @@ class EchoBot extends ActivityHandler {
 
         this.onMembersAdded(async (context, next) => {
             const membersAdded = context.activity.membersAdded;
-            //write a custom greeting
-            const welcomeText = '';
+            const welcomeText = '`Hello patient, welcome to the hell.`';
             for (let cnt = 0; cnt < membersAdded.length; ++cnt) {
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
                     await context.sendActivity(MessageFactory.text(welcomeText, welcomeText));
                 }
             }
-            // by calling next() you ensure that the next BotHandler is run.
+            // By calling next() you ensure that the next BotHandler is run.
             await next();
         });
     }
@@ -80,10 +102,10 @@ class EchoBot extends ActivityHandler {
                     }
                 },
                 parameters: {
-                    projectName: "cus-ques-ans-luis",
-                    verbose: true,
-                    deploymentName: "cus-ques-ans-luis-model",
-                    stringIndexType: "TextElement_V8"
+                    "projectName": "project-2",
+                    "verbose": true,
+                    "deploymentName": "project-2",
+                    "stringIndexType": "TextElement_V8"
                 }
             },
             {
