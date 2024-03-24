@@ -7,11 +7,10 @@ const IntentRecognizer = require("./intentrecognizer")
 const axios = require('axios');
 const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
 
-class DentaBot extends ActivityHandler {
+class EchoBot extends ActivityHandler {
     constructor(configuration, qnaOptions) {
         // call the parent constructor
         super();
-        if (!configuration) throw new Error('[QnaMakerBot]: Missing parameter. configuration is required');
 
         // create a QnAMaker connector
 
@@ -145,4 +144,4 @@ class DentaBot extends ActivityHandler {
 
 }
 
-module.exports.DentaBot = DentaBot;
+module.exports.EchoBot = EchoBot;
