@@ -120,8 +120,6 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about how bots work.
-console.log(process.env.MicrosoftAppId);
-console.log(process.env.MicrosoftAppPassword);
 
 const adapter = new BotFrameworkAdapter({
     appId: process.env.MicrosoftAppId,
@@ -153,27 +151,27 @@ const onTurnErrorHandler = async (context, error) => {
 adapter.onTurnError = onTurnErrorHandler;
 
 // Map configuration values values from .env file into the required format for each service.
-const QnAConfiguration = {
-    knowledgeBaseId: process.env.QnAKnowledgebaseId,
-    endpointKey: process.env.QnAAuthKey,
-    host: process.env.QnAEndpointHostName
-};
+// const QnAConfiguration = {
+//     knowledgeBaseId: process.env.QnAKnowledgebaseId,
+//     endpointKey: process.env.QnAAuthKey,
+//     host: process.env.QnAEndpointHostName
+// };
 
-const LuisConfiguration = {
-    applicationId: process.env.LuisAppId,
-    endpointKey: process.env.LuisAPIKey,
-    endpoint: process.env.LuisAPIHostName,
-    deploymentId: process.env.LuisAppDeployment
-}
+// const LuisConfiguration = {
+//     applicationId: process.env.LuisAppId,
+//     endpointKey: process.env.LuisAPIKey,
+//     endpoint: process.env.LuisAPIHostName,
+//     deploymentId: process.env.LuisAppDeployment
+// }
 
-const SchedulerConfiguration = {
-    SchedulerEndpoint: process.env.SchedulerEndpoint
-}
-//pack each service configuration into 
+// const SchedulerConfiguration = {
+//     SchedulerEndpoint: process.env.SchedulerEndpoint
+// }
+// //pack each service configuration into 
 const configuration = {
-    QnAConfiguration,
-    LuisConfiguration,
-    SchedulerConfiguration
+    // QnAConfiguration,
+    // LuisConfiguration,
+    // SchedulerConfiguration
 }
 
 // Create the main dialog.
