@@ -33,9 +33,9 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 // sameple code of course is used BotFrameworkAdapter
 const botFrameworkAuthentication = new ConfigurationBotFrameworkAuthentication({
-    appId: '55063df4-14e0-4e6f-92cf-509c47bd23f9', // The client ID of the user-assigned managed identity.
-    appPassword: "", // Not applicable. Leave this blank for a user-assigned managed identity bot.
-    tenantId: '87a45d18-f2c7-4012-839e-c9cce6cd0aa4' // The tenant ID of the user-assigned managed identity.
+   // appId: '55063df4-14e0-4e6f-92cf-509c47bd23f9', // The client ID of the user-assigned managed identity.
+   // appPassword: "", // Not applicable. Leave this blank for a user-assigned managed identity bot.
+   // tenantId: '87a45d18-f2c7-4012-839e-c9cce6cd0aa4' // The tenant ID of the user-assigned managed identity.
 });
 
 // Create adapter.
